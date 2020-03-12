@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require("express-validator/check");
+const bcrypt = require("bcryptjs");
+const { check, validationResult } = require("express-validator");
 
-const USer = require("../models/User");
+const User = require("../models/User");
 
 // @route   POST api/users
 // @desc    Register a user
@@ -10,6 +11,7 @@ const USer = require("../models/User");
 router.post(
   "/",
   [
+    // validation with express-validator
     check("name", "Please add a name")
       .not()
       .isEmpty(),
@@ -19,13 +21,33 @@ router.post(
       "Plese enter a password with 6 or more characters"
     ).isLength({ min: 6 })
   ],
-  (req, res) => {
+  async (req, res) => {
+    // send back errors, if any
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    res.send("passed");
+    const { name, email, password } = req.body;
+
+    try {
+      // check if user already exists
+      let user = await User.findOne({ email });
+      if (user) {
+        return res.status(400).json({ msg: "User already exists" });
+      }
+      // create new user
+      user = new User({ name, email, password });
+      // salt nd hash pwd
+      user.password = await bcrypt.hash(password, 8);
+      // save to db
+      await user.save();
+
+      res.send("User saved");
+    } catch (err) {
+      console.error(err.message);
+      res.satus(500).send("Server Error");
+    }
   }
 );
 

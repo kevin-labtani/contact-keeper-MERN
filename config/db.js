@@ -3,7 +3,7 @@ const config = require("config");
 
 // grab uri with username and password from default.json with config
 const db = config.get("mongoURI");
-
+// connect to mongodb atlas database
 const connectDB = async () => {
   try {
     await mongoose.connect(db, {
@@ -12,10 +12,10 @@ const connectDB = async () => {
       useCreateIndex: true,
       useFindAndModify: false
     });
-
     console.log("MongoDB connected");
   } catch (err) {
     console.error(err.message);
+    // exit Node with Uncaught Fatal Exception
     process.exit(1);
   }
 };
