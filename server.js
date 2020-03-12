@@ -6,6 +6,10 @@ const app = express();
 // connect to mongoDB
 connectDB();
 
+// middleware
+// parse incoming json to an object
+app.use(express.json({ extended: false }));
+
 app.get("/", (req, res) =>
   res.json({ msg: "Welcome to the Contact Keeper API" })
 );

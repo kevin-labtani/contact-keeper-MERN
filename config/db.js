@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const config = require("config");
 
+// grab uri with username and password from default.json with config
 const db = config.get("mongoURI");
 
 const connectDB = async () => {
