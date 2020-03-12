@@ -114,4 +114,4 @@ Thumbs.db
 mongodb-data
 
 # config and env variables
-config
+config/default.json
