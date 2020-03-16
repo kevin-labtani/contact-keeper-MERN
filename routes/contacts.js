@@ -27,9 +27,45 @@ router.get("/", auth, async (req, res) => {
 // @route     POST api/contacts
 // @desc      Add new contact
 // @access    Private
-router.post("/", (req, res) => {
-  res.send("Add contact");
-});
+router.post(
+  "/",
+  // two middlewares, use [] and list them
+  [
+    auth,
+    [
+      check("name", "Name is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    // send back errors, if any
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, email, phone, type } = req.body;
+
+    try {
+      // make new contact
+      const newContact = new Contact({
+        name,
+        email,
+        phone,
+        type,
+        user: req.user.id //jwt payload form auth middleware
+      });
+      // save new contact to db
+      const contact = await newContact.save();
+      // send back contact as json
+      res.json(contact);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
 
 // @route     PUT api/contacts/:id
 // @desc      Update contact

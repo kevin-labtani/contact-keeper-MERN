@@ -8,6 +8,7 @@ const router = express.Router();
 
 const User = require("../models/User");
 
+// to test the route in POSTMAN need to put Content-Type: application/json en header
 // @route   POST api/users
 // @desc    Register a user
 // @access  Public
