@@ -41,7 +41,7 @@ router.post(
       }
       // create new user
       user = new User({ name, email, password });
-      // salt nd hash pwd
+      // salt and hash pwd
       user.password = await bcrypt.hash(password, 8);
       // save to db
       await user.save();
@@ -56,6 +56,7 @@ router.post(
         payload,
         config.get("jwtSecret"),
         {
+          // 3600 is an hour, put 100h in dev so it doesn't expire while we test
           expiresIn: 360000
         },
         (err, token) => {

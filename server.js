@@ -8,7 +8,7 @@ connectDB();
 
 // middleware
 // parse incoming json to an object
-app.use(express.json({ extended: false }));
+app.use(express.json());
 
 app.get("/", (req, res) =>
   res.json({ msg: "Welcome to the Contact Keeper API" })
