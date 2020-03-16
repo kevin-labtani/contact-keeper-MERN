@@ -109,8 +109,29 @@ router.put("/:id", auth, async (req, res) => {
 // @route     DELETE api/contacts/:id
 // @desc      Delete contact
 // @access    Private
-router.delete("/:id", (req, res) => {
-  res.send("Delete contact");
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    // try to find the contact in the db
+    let contact = await Contact.findById(req.params.id);
+
+    // send msg if contact not found
+    if (!contact) {
+      return res.status(404).json({ msg: "Contact not found" });
+    }
+    // make sure user owns contact, you can't update a contact from another user!
+    // convert MongoDB ObjectId to a string to compare to the jwt payload
+    if (contact.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "Not authorized" });
+    }
+
+    // delete the contact
+    await Contact.findByIdAndRemove(req.params.id);
+    // inform use that the contact is deleted
+    res.json({ msg: "Contact removed" });
+  } catch (err) {
+    console.error(er.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 module.exports = router;
