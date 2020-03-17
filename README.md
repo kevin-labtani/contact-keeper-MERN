@@ -41,6 +41,39 @@ autres outils: MongoDB Compass, Postman
 - make config folder in the root, add `default.json` (part of config npm package) for global variables
 - create `db.js` file in config folder for the code to connect to db, nb: we're using async/await, requite `db.js` in our `server.js` and connect to db
 
+#### User Model & Register Route Validation
+
+- create a models folder, a `User.js` file and make a Mongoose User Model and import it in the `users.js` route file
+- we need to add a piece of middleware to our server.js `app.use(express.json());` in order to parse the json in the request body (req.body)
+- in Postman make a post request to `http://localhost:5000/api/users`, add `Content-Type: application/json` in the Headers and in the body pick raw and send to test the route:
+
+```json
+{
+  "name": "John Doe",
+  "email": "johndoe@gmail.com",
+  "password": "azerty"
+}
+```
+
+- we're using express-validator by passing as 2nd parameter to `router.post()` an array with `check()` methods and then handle the potential errors with `validationResult(req)` in the callback
+
+#### Hash Password Register Route
+
+- in `users.js` routes, using async/await, we add a try/catch block after validation to check from the db if the new user already exists, if he does, send an error, if not we create a new user using the Mongoose User model, hash & salt the password with bcrypt and then save the new user to the db.
+- use Postman to register a new user and MongoDB Compass to check the db
+
+#### Respond with a JSON Web Token
+
+- we want to send a jwt after a new user successfully register
+- after the new user is saved to the db, we construct the jwt payload, it's just the user id as we can use that to eg: access all the contacts a specific user has
+- to generate a token we have to sign it with `jwt.sign()`, it takes 4 parameters, the payload, the jwt secret that we load from our `default.json` with the config npm module, an object of options, and a callback that'll send the token as json if there are no errors
+- check route with Postman
+
+#### Auth Route
+
+- we now write the login route in `auth.js`, it's pretty close to the register route except we'll use `bcrypt.compare()` to check the password the user provides to login
+- check route with Postman: create a Postman collection, a Users&Auth folder and create a Post request to `http://localhost:5000/api/users`, add the `Content-Type: application/json` header and in body send raw json with email and password to make sure we get a jwt back with correct credentials and our error messages with the wrong or missing credentials
+-
 
 ### Front-End React App
 
@@ -63,14 +96,14 @@ autres outils: MongoDB Compass, Postman
 
 - remove the `.gitignore` in the client directory as there's already one in the root and remove the git repo by running `rm -rf .git` in the client directory
 
-#### Navbar & Router setup
+#### Navbar & Router Setup
 
 - cleanup the create-react-app basic app by removing what we don't need
 - setup fontawesome, css, font
 - setup app folder structure
 - make a basic navbar and set up the Home and About page
 
-#### Context and State for contacts
+#### Context and State for Contacts
 
 - first we code the context and state so we have our single-source-of-thruth for our contacts
 - create contactContext, it's just to initialise our context
@@ -78,7 +111,7 @@ autres outils: MongoDB Compass, Postman
 - ContactState import context, reducer and types. We put some hard coded contacts in the initialState for now before we deal with our backend. We'll wrap our entire app with this context provider
 - contactReducer is empty for now
 
-#### Contact & ContactItem components
+#### Contact & ContactItem Components
 
 - now that we have access to our state we can start coding our contact components
 - we want to pull in the contacts from the state into the Contacts component and then loop through them create a list and output a ContactItem component for each one
