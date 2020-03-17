@@ -73,7 +73,18 @@ autres outils: MongoDB Compass, Postman
 
 - we now write the login route in `auth.js`, it's pretty close to the register route except we'll use `bcrypt.compare()` to check the password the user provides to login
 - check route with Postman: create a Postman collection, a Users&Auth folder and create a Post request to `http://localhost:5000/api/users`, add the `Content-Type: application/json` header and in body send raw json with email and password to make sure we get a jwt back with correct credentials and our error messages with the wrong or missing credentials
--
+
+#### Auth Middleware and Protecting Routes
+
+- create middleware `auth.js`, middleware has access to the request-response cycle and the req and res object, we will want to check if there's a token in the header
+- we get the jwt token from the header `req.header("x-auth-token");`, if it exists we verify it with the `jwt.verify()` method , that gets us back the payload from the jwt
+- we get the user from the payload and assign him to the request object, then we move on by calling the `next()` method
+- we can now protect our private routes by passing the `auth` middleware as a 2nd parameter to the routes
+- we can now do the _Get logged in user_ route in `auth.js` routes, we use the id provided by our middleware in `req.user.id` to try and find the current logged in user in our db and return it, if we send the correct token.
+
+##### Contact Model and Routes
+
+- TODO videos 44-46
 
 ### Front-End React App
 
