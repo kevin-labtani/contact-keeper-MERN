@@ -22,6 +22,26 @@ autres outils: MongoDB Compass, Postman
 
 ### Back-End Node.js/Express API
 
+#### Setup
+
+- We're using MongoDB Atlas as a cloud NoSQL db, so we need to set it up, add a new user for this specific app and whitelist our ip (or 0.0.0.0/0 to whitelist all ips)
+- We're using Postman to test our API while developing it
+- create a folder and do a `npm init -y`
+- add our dependencies and write a basic express server in a `server.js` file sending `res.json({msg: "Hello World"})` to the `'/'` route, test it with Postman
+
+#### Backend Routes
+
+- create routes folder and one file for each resource, contacts, users and auth here, import the routes into our server.js, we want each back-end route to start with `/api` so we use eg. for users routes: `app.use("/api/users", require("./routes/users"));`
+- code our users, auth and contacts routes (no functionality right now, all routes just `res.send('some text')`), nb: we're using `express.Router()` so the routes are eg. for post: `router.post()`. don't forget to export at the end of the file `module.exports = router;`
+- test routes with Postman
+
+#### Connect App to MongoDB
+
+- `git init`, add `.gitignore` if not done before
+- make config folder in the root, add `default.json` (part of config npm package) for global variables
+- create `db.js` file in config folder for the code to connect to db, nb: we're using async/await, requite `db.js` in our `server.js` and connect to db
+
+
 ### Front-End React App
 
 #### Setup
@@ -58,7 +78,7 @@ autres outils: MongoDB Compass, Postman
 - ContactState import context, reducer and types. We put some hard coded contacts in the initialState for now before we deal with our backend. We'll wrap our entire app with this context provider
 - contactReducer is empty for now
 
-#### Contact components
+#### Contact & ContactItem components
 
 - now that we have access to our state we can start coding our contact components
 - we want to pull in the contacts from the state into the Contacts component and then loop through them create a list and output a ContactItem component for each one
