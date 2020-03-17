@@ -57,3 +57,10 @@ autres outils: MongoDB Compass, Postman
 - types are variables that we use to decide the actions we do in our reducer
 - ContactState import context, reducer and types. We put some hard coded contacts in the initialState for now before we deal with our backend. We'll wrap our entire app with this context provider
 - contactReducer is empty for now
+
+#### Contact components
+
+- now that we have access to our state we can start coding our contact components
+- we want to pull in the contacts from the state into the Contacts component and then loop through them create a list and output a ContactItem component for each one
+- so we code the Contacts component first, import contactContext and consume the context, right now we just have our hadcoded contact array with 3 objects in our context value, we map through them and output each one
+- we embed the Contacts components in our Home page
