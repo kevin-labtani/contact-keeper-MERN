@@ -62,5 +62,7 @@ autres outils: MongoDB Compass, Postman
 
 - now that we have access to our state we can start coding our contact components
 - we want to pull in the contacts from the state into the Contacts component and then loop through them create a list and output a ContactItem component for each one
-- so we code the Contacts component first, import contactContext and consume the context, right now we just have our hadcoded contact array with 3 objects in our context value, we map through them and output each one
+- so we create the Contacts component first, import contactContext and consume the context, right now we just have our hadcoded contact array with 3 objects in our context value, we map through them and output a simple `<h3>{contact.name}</h3>` for each one
 - we embed the Contacts components in our Home page
+- create the ContactItem component, import it into the Contacts component, and output a ContactItem for each contact in the map instead of the h3.
+- nb: email and phone aren't required, so we need to make sure they exist in the ContactItem component before outputting them `{phone && (<li>....</li>)}`
