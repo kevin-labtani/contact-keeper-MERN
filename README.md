@@ -49,3 +49,11 @@ autres outils: MongoDB Compass, Postman
 - setup fontawesome, css, font
 - setup app folder structure
 - make a basic navbar and set up the Home and About page
+
+#### Context and State for contacts
+
+- first we code the context and state so we have our single-source-of-thruth for our contacts
+- create contactContext, it's just to initialise our context
+- types are variables that we use to decide the actions we do in our reducer
+- ContactState import context, reducer and types. We put some hard coded contacts in the initialState for now before we deal with our backend. We'll wrap our entire app with this context provider
+- contactReducer is empty for now
