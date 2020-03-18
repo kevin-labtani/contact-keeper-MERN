@@ -3,6 +3,7 @@ import ContactContext from "../../context/contact/contactContext";
 
 const ContactForm = () => {
   const contactContext = useContext(ContactContext);
+  const { addContact } = contactContext;
 
   // single piece of state with all the fields rather than having a useState per field
   const [contact, setContact] = useState({
@@ -19,7 +20,7 @@ const ContactForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    contactContext.addContact(contact);
+    addContact(contact);
     setContact({
       name: "",
       email: "",

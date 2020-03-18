@@ -137,11 +137,17 @@ autres outils: MongoDB Compass, Postman
 - create the ContactItem component, import it into the Contacts component, and output a ContactItem for each contact in the map instead of the h3.
 - nb: email and phone aren't required, so we need to make sure they exist in the ContactItem component before outputting them `{phone && (<li>....</li>)}`
 
-#### ContactForm Component
+#### ContactForm Component & Add Contact
 
 - now we make the ContactForm component, it'll be used to add and update contacts, we'll add the update fucntionality later, first we focus on displaying the form. We're using an object as a single piece of state `contact` with all the form fields rather than having a useState per field, so our onChange will destructure the state object and update the relevant field: `setContact({ ...contact, [e.target.name]: e.target.value });`.
 - bring in the ContactForm in our `Home.js` page to display it
 - we now import our ContactContext and implement an onSubmit handler that'll add our contact by calling the addContact function from ContactState and then clear the form.
 - we implement `addContact()` in `ContactState.js`, for now we're just adding the contact to the ui, later on we'll add it to the db. We're using uuid to add an id to the contact, when we add our back-end MongoDB will add an id by itself; then we're dispatching to our reducer with type: ADD_CONTACT and payload: contact. We'll also need to pass addContact to the `ContactContext.Provider` as value
-- we now implement our `contactReducer.js`, import the types and create the switch case for ADD_CONTACT that'll update the state
+- we now implement our `contactReducer.js`, import the types and create the switch case for ADD_CONTACT that'll update the state. nb: state being a immutable data structure, we use the spread operator to create a new state object from the incoming state and the part we want to change
 
+#### Delete Contact
+
+- delete button is in the ContactItem component, so that's where we'll write the code
+- first we'll import our ContactContext in the component and initialize it, then we add an `onCLick` to the delete button, we'll create an `onDelete` method rather than use an inline function as there's several things we'll need to do later, the method will call `deleteContact()` from the context
+- we implement `deleteContact()` in `ContactState.js`, we're dispatching to our reducer with type: DELETE_CONTACT and payload: id. We'll also need to pass deleteContact to the Provider as value
+- we now implement the reducer case for DELETE_CONTACT, it returns the state and filter out the contact we're deleting
