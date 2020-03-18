@@ -123,7 +123,7 @@ autres outils: MongoDB Compass, Postman
 #### Context and State for Contacts
 
 - first we code the context and state so we have our single-source-of-thruth for our contacts
-- create contactContext, it's just to initialise our context
+- we create contactContext, it's just to initialise our context
 - types are variables that we use to decide the actions we do in our reducer
 - ContactState import context, reducer and types. We put some hard coded contacts in the initialState for now before we deal with our backend. We'll wrap our entire app with this context provider
 - contactReducer is empty for now
@@ -167,3 +167,10 @@ autres outils: MongoDB Compass, Postman
 - we need to update our `onSubmit()` so it behaves differently based on wether we're adding a new user or updating a current user, we now call `updateContact()` if there's a `current` value
 - we create the `updateContact()` method in ContactState, it'll dispatch to the Reducer, the payload is the entire contact. We also add the method to our Context Provider.
 - we implement the UPDATE_CONTACT case in `contactReducer.js`, we map over our contacts and return the contact as is, or the new updated contact for the contact that was updated (we check by comparing ids)
+
+#### Contact Filtering
+
+- we want a filter input right above the contacts we can use to filter them based on contact name or email
+- need a piece of state `filtered` in `ContactState.js` to hold the filtered contacts, we can now create our `filterContacts()` method that'll dispatch to the reducer and send the text we filter on as payload, as well as our `clearFilter()` method that'll also dispatch to the reducer and set `filtered` back to null. We also add both methods as well as the new `filtered` piece of state to our Context Provider. 
+- we now write switch cases for both of those dispatches in our reducer, for the FILTER_CONTACTS case we construct a regex from the text passed in and return the contacts where either the name or email match
+- we create a new component `ContactFilter.js`
