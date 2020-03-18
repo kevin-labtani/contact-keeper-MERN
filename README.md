@@ -149,5 +149,13 @@ autres outils: MongoDB Compass, Postman
 
 - delete button is in the ContactItem component, so that's where we'll write the code
 - first we'll import our ContactContext in the component and initialize it, then we add an `onCLick` to the delete button, we'll create an `onDelete` method rather than use an inline function as there's several things we'll need to do later, the method will call `deleteContact()` from the context
-- we implement `deleteContact()` in `ContactState.js`, we're dispatching to our reducer with type: DELETE_CONTACT and payload: id. We'll also need to pass deleteContact to the Provider as value
+- we implement `deleteContact()` in `ContactState.js`, we're dispatching to our reducer with type: DELETE_CONTACT and payload: id. We'll also need to pass deleteContact to the Provider
 - we now implement the reducer case for DELETE_CONTACT, it returns the state and filter out the contact we're deleting
+
+#### Edit Contact
+
+- we want to pass the contact we want to edit to the form for editing, to do that we'll store the `current` contact in our state in ContactState, and when we click one of the edit buttons the contact we want to edit is set to `current`
+- we create the set current contact and the clear current contact methods in ContactState; both will dispatch to the Reducer. Add both setCurrent and clearCurrent, as well as the new `current` piece of state to the Povider
+- we implement both SET_CURRENT and CLEAR_CURRENT cases in `contactReducer.js`
+- edit button is in ContactItem, that's where we'll implement an onClick method on the Edit button, we pass in an inline function calling `setCurrent()` on `contact`, contact comes from the props passed in to the ContactItem component; check in React Dev Tools that when we click edit on one of the contacts, the Context.Provider current value gets updated
+- we also want to call `clearCurrent()` in our `onDelete()` in `ContactItem.js`
