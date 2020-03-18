@@ -152,10 +152,18 @@ autres outils: MongoDB Compass, Postman
 - we implement `deleteContact()` in `ContactState.js`, we're dispatching to our reducer with type: DELETE_CONTACT and payload: id. We'll also need to pass deleteContact to the Provider
 - we now implement the reducer case for DELETE_CONTACT, it returns the state and filter out the contact we're deleting
 
-#### Edit Contact
+#### Edit Contact - Set and Clear Current
 
 - we want to pass the contact we want to edit to the form for editing, to do that we'll store the `current` contact in our state in ContactState, and when we click one of the edit buttons the contact we want to edit is set to `current`
 - we create the set current contact and the clear current contact methods in ContactState; both will dispatch to the Reducer. Add both setCurrent and clearCurrent, as well as the new `current` piece of state to the Povider
 - we implement both SET_CURRENT and CLEAR_CURRENT cases in `contactReducer.js`
-- edit button is in ContactItem, that's where we'll implement an onClick method on the Edit button, we pass in an inline function calling `setCurrent()` on `contact`, contact comes from the props passed in to the ContactItem component; check in React Dev Tools that when we click edit on one of the contacts, the Context.Provider current value gets updated
+- edit button is in ContactItem, that's where we'll implement an onClick method on the Edit button, we pass in an inline function calling `setCurrent()` on `contact`, contact comes from the props passed in to the ContactItem component; check in React Dev Tools that when we click edit on one of the contacts, the Context.Provider `current` value gets updated
 - we also want to call `clearCurrent()` in our `onDelete()` in `ContactItem.js`
+
+#### Edit Contact - ContactForm
+
+- we now want to work on the ContactForm, we want to fill the form based on wether there's something in the `current` value when the component is mounted, so we're using useEffect, now when we click on an edit button, the contact gets put into the form
+- we modify the main button and title based on `current` value and add a Clear button when we're editing a contact that'll call a `clearAll()` method that'll call `clearCurrent()` and do more later on
+- we need to update our `onSubmit()` so it behaves differently based on wether we're adding a new user or updating a current user, we now call `updateContact()` if there's a `current` value
+- we create the `updateContact()` method in ContactState, it'll dispatch to the Reducer, the payload is the entire contact. We also add the method to our Context Provider.
+- we implement the UPDATE_CONTACT case in `contactReducer.js`, we map over our contacts and return the contact as is, or the new updated contact for the contact that was updated (we check by comparing ids)
