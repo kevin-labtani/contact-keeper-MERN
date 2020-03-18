@@ -171,6 +171,7 @@ autres outils: MongoDB Compass, Postman
 #### Contact Filtering
 
 - we want a filter input right above the contacts we can use to filter them based on contact name or email
-- need a piece of state `filtered` in `ContactState.js` to hold the filtered contacts, we can now create our `filterContacts()` method that'll dispatch to the reducer and send the text we filter on as payload, as well as our `clearFilter()` method that'll also dispatch to the reducer and set `filtered` back to null. We also add both methods as well as the new `filtered` piece of state to our Context Provider. 
+- need a piece of state `filtered` in `ContactState.js` to hold the filtered contacts, we can now create our `filterContacts()` method that'll dispatch to the reducer and send the text we filter on as payload, as well as our `clearFilter()` method that'll also dispatch to the reducer and set `filtered` back to null. We also add both methods as well as the new `filtered` piece of state to our Context Provider.
 - we now write switch cases for both of those dispatches in our reducer, for the FILTER_CONTACTS case we construct a regex from the text passed in and return the contacts where either the name or email match
-- we create a new component `ContactFilter.js`
+- we create a new component `ContactFilter.js`. it has a form we'll use to input the text we want to filter on. Embed in on the `Home.js` page
+- update the `Contacts.js` component to output the filtered contacts if there's a value in `filtered` instead of outputting all of the contacts
