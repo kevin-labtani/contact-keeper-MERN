@@ -83,7 +83,7 @@ autres outils: MongoDB Compass, Postman
 - we can now do the _Get logged in user_ route in `auth.js` routes, we use the id provided by our middleware in `req.user.id` to try and find the current logged in user in our db and return it, if we send the correct token.
 - check the route in Postman, first use the login route to get a valid jwt and copy the token in the Headers for this route under the `x-auth-token` key
 
-##### Contact Model and Routes
+#### Contact Model and Routes
 
 - first we create a `Contact.js` Mongoose model, we link the contacts to users with the user key in the schema
 - then we work on the `contacts.js` routes
@@ -136,3 +136,12 @@ autres outils: MongoDB Compass, Postman
 - we embed the Contacts components in our Home page
 - create the ContactItem component, import it into the Contacts component, and output a ContactItem for each contact in the map instead of the h3.
 - nb: email and phone aren't required, so we need to make sure they exist in the ContactItem component before outputting them `{phone && (<li>....</li>)}`
+
+#### ContactForm Component
+
+- now we make the ContactForm component, it'll be used to add and update contacts, we'll add the update fucntionality later, first we focus on displaying the form. We're using an object as a single piece of state `contact` with all the form fields rather than having a useState per field, so our onChange will destructure the state object and update the relevant field: `setContact({ ...contact, [e.target.name]: e.target.value });`.
+- bring in the ContactForm in our `Home.js` page to display it
+- we now import our ContactContext and implement an onSubmit handler that'll add our contact by calling the addContact function from ContactState and then clear the form.
+- we implement `addContact()` in `ContactState.js`, for now we're just adding the contact to the ui, later on we'll add it to the db. We're using uuid to add an id to the contact, when we add our back-end MongoDB will add an id by itself; then we're dispatching to our reducer with type: ADD_CONTACT and payload: contact. We'll also need to pass addContact to the `ContactContext.Provider` as value
+- we now implement our `contactReducer.js`, import the types and create the switch case for ADD_CONTACT that'll update the state
+
