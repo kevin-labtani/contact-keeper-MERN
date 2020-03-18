@@ -81,10 +81,16 @@ autres outils: MongoDB Compass, Postman
 - we get the user from the payload and assign him to the request object, then we move on by calling the `next()` method
 - we can now protect our private routes by passing the `auth` middleware as a 2nd parameter to the routes
 - we can now do the _Get logged in user_ route in `auth.js` routes, we use the id provided by our middleware in `req.user.id` to try and find the current logged in user in our db and return it, if we send the correct token.
+- check the route in Postman, first use the login route to get a valid jwt and copy the token in the Headers for this route under the `x-auth-token` key
 
 ##### Contact Model and Routes
 
-- TODO videos 44-46
+- first we create a `Contact.js` Mongoose model, we link the contacts to users with the user key in the schema
+- then we work on the `contacts.js` routes
+- for the _Get all users contact_ route, nothing special; test the route in Postman, will need to get a token in the Headers by first logging in a user; make a new folder in Psotman to save the contacts routes
+- _Add new contact_ route need both auth and express-validator middleware, we put them one after the other between [] as 2nd parameter to the route; test the route in Postman, will need Headers for content-type and auth-token, and add a contact in raw json with at least name and email.
+- _Update contact_ route, first we make an object with the fields submitted for updating then we check for the contact to be updated by id - the id is passed as url parameter so we can get it with `req.params.id` - and finally we update the contact using the object we created and send back the new contact. Check the route in postman, will need Headers for content-type and auth-token
+- _Delete contact_ route, similar to update route.
 
 ### Front-End React App
 
