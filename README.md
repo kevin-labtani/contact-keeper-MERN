@@ -189,12 +189,23 @@ autres outils: MongoDB Compass, Postman
 - we want to start integrating our Express Backend, starting with Auth. We create a new folder for auth context, `AuthState.js`, `authContext.js` and `authReducer.js` files. That's basically what we do each time wa add a new resource to our state/app.
 - add auth types to our `types.js` file
 - write the `authContext.js` file
-- in `AuthState.js`, import the needed types, context and the other basic imports. Write the initialState; the token will be stored in localStorage, we also init the variables isAuthenticated,loading, user and error. Init the useReducer(). Add comments for every single method we want to implement. Write our `AuthContext.Provider`; And finally export our `AuthState` component
-- import our Authstate in our App.js and wrap the entire app with our AuthState component
+- in `AuthState.js`, import the needed types, context and the other basic imports. Write the initialState; the token will be stored in localStorage, we also init the variables isAuthenticated,loading, user and error. Init the `useReducer()`. Add comments for every single method we want to implement. Write our `AuthContext.Provider`; And finally export our `AuthState` component
+- import our Authstate in our `App.js` and wrap the entire app with our AuthState component
 
 #### Register & Login Forms
 
 - create a new folder auth in components and `Login.js` and `Register.js` files
 - start with `Register.js`, we set user in the state, return a form allowing user to register, code `onChange()` and basic `onSubmit()` methods; then bring in the Register component into `App.js` and add a new route for it to "/register"
 - we code `Login.js` next, pretty much the same as the Register component
-- update the Navbar component with links to the 2 ne routes
+- update the Navbar component with links to the 2 new routes
+
+#### Context, State & Component for Alert
+
+- we'll create the alerts context, state, reducer and component now. We create a 3rd folder in context for alert context along with `AlertState.js`, `alertContext.js` and `alertReducer.js` files.
+- create `alertContext.js` first
+- work on `AlertState.js` next, import the needed types, context and the other basic imports. Write the initialState, as an array of alert objects (starts empty). Init the `useReducer()`. Write the `setAlert()` method, it'll dispatch to our alertReducer, since we have an array of alerts we need an id for each alerts, we use uuid for that. The alert will disappear after a set amount of type, so we write a setTimeout that'll dispatch to our alertReducer to remoe the alert after the timeout. Write our `AlertContext.Provider`; And finally export our `AlertState` component.
+- import our Alertstate component in our `App.js` and wrap the router with it
+- implement `alertReducer`, there are 2 cases for the switch: SET_ALERT and REMOVE_ALERT
+- we create an Alert component in the layout folder, it'll consume the alertContext and display the alerts, if there are any, with a style dynamic to the alert `type`
+- import our Alert component in our `App.js` and display it right above the Switch
+- bring in the AlertContext in our Register component to display an alert if pwd don't match or if a field is missing
