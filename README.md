@@ -182,10 +182,19 @@ autres outils: MongoDB Compass, Postman
 - copy paste the css from [the doc](https://reactcommunity.org/react-transition-group/transition-group) into our `App.css` from item-enter and item-exit
 - back in `Contacts.js` we add a TransitionGroup wrapping everything and a CssTranstion wrapping individual ContactItems.
 
-#### React/Express Auth
+### React/Express Auth
+
+#### Context and State for Auth
 
 - we want to start integrating our Express Backend, starting with Auth. We create a new folder for auth context, `AuthState.js`, `authContext.js` and `authReducer.js` files. That's basically what we do each time wa add a new resource to our state/app.
 - add auth types to our `types.js` file
 - write the `authContext.js` file
 - in `AuthState.js`, import the needed types, context and the other basic imports. Write the initialState; the token will be stored in localStorage, we also init the variables isAuthenticated,loading, user and error. Init the useReducer(). Add comments for every single method we want to implement. Write our `AuthContext.Provider`; And finally export our `AuthState` component
 - import our Authstate in our App.js and wrap the entire app with our AuthState component
+
+#### Register & Login Forms
+
+- create a new folder auth in components and `Login.js` and `Register.js` files
+- start with `Register.js`, we set user in the state, return a form allowing user to register, code `onChange()` and basic `onSubmit()` methods; then bring in the Register component into `App.js` and add a new route for it to "/register"
+- we code `Login.js` next, pretty much the same as the Register component
+- update the Navbar component with links to the 2 ne routes
