@@ -175,3 +175,9 @@ autres outils: MongoDB Compass, Postman
 - we now write switch cases for both of those dispatches in our reducer, for the FILTER_CONTACTS case we construct a regex from the text passed in and return the contacts where either the name or email match
 - we create a new component `ContactFilter.js`. it has a form we'll use to input the text we want to filter on. Embed in on the `Home.js` page
 - update the `Contacts.js` component to output the filtered contacts if there's a value in `filtered` instead of outputting all of the contacts
+
+#### Add, Delete & Filter Animation
+
+- we're using react-transition-group to animate contacts when they come in or out of the DOM, code is in `Contacts.js`
+- copy paste the css from [the doc](https://reactcommunity.org/react-transition-group/transition-group) into our `App.css` from item-enter and item-exit
+- back in `Contacts.js` we add a TransitionGroup wrapping everything and a CssTranstion wrapping individual ContactItems.

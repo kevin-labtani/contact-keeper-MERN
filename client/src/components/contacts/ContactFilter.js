@@ -18,7 +18,7 @@ const ContactFilter = () => {
   };
 
   return (
-    <form>
+    <form onSubmit={e => e.preventDefault()}>
       <input
         type="text"
         placeholder="Filter Contacts..."
