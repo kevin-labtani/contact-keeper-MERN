@@ -209,3 +209,12 @@ autres outils: MongoDB Compass, Postman
 - we create an Alert component in the layout folder, it'll consume the alertContext and display the alerts, if there are any, with a style dynamic to the alert `type`
 - import our Alert component in our `App.js` and display it right above the Switch
 - bring in the AlertContext in our Register component to display an alert if pwd don't match or if a field is missing
+
+#### User Registration
+
+- we want to make register form work, we're going to do that by calling a register action in AuthState that'll hit the server, put the user in the db and return a token that we have to handle
+- in `AuthState.js` we're creating a register method that's using Axios to make a POST request to our backend at "/api/users" (remember we set up a proxy value in `package.json`), so we're hitting the route in `routes/users.js`; we'll get back an error if the user already exists that'll trigger the catch in the register method in `AuthState.js`, otherwise the pwd will be hashed and the new user will be saved to the db. we'll dispatch to the reducer REGISTER_SUCCESS if it goes well and REGISTER_FAIL if there's an error. We also add the register method to our Context Provider.
+- in our `authReducer.js`, we import all the types, and write switch cases for REGISTER_SUCCESS & REGISTER_FAIL, in case of success we store the token in local storage and we return the old state, the token (it's in `action.payload`) and set `isAuthenticated` to true and `loading` to false; in case of failure, we remove any token from local storage, and in the return we reset everything, and also send the error (our `action.payload`)
+- we'll call the register method we just wrote in the `Register.js` component. We import and init the AuthContext and call the register method in the `onSubmit()` and pass to it the formData, an object with the name, email and pwd.
+- we can now try to register a user; it works and the new user is writen to db and if we check the dev tools for the auth context provider we can see that `isAuthenticated` is true and the `token` is there, `user` is null, we're going to have to load the user as if we reload the page `isAuthenticated` is now null, we'll do that later. Now we're going to display an alert on register error if the user already exists (email already in db).
+- in the Register component
