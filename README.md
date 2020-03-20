@@ -231,3 +231,10 @@ autres outils: MongoDB Compass, Postman
 - we want our Register component to redirect if we're authenticated, so we bring in `isAuthenticated` from our authContext and use it in the useEffect rigth before we check for errors where we redirect to homepage with react router if the user is authenticated
 - test in the browser tat it works, when we register a new user, the page redirects us to home and, the user data get put under `user` in the state, `isAuthenticated` is set to true, and the `token` get its value, (and the token get added to localstorage). If we reload the page though, `user` and `isAuthenticated` get set back to null and e don't want that, so we need to call load user when this home page loads
 - in `Home.js` we bring in and init our AuthContext and add a useEffect and call `loadUser()` within. If we reload the page in the navigator, we now see the `user` is there in the state; nb: the token was still in localstorage, loadUser was called with it, it hit the back-end at "/api/auth" and authenticated the user, so we didn't need to register a new user to test.
+
+#### User Login
+
+- in `AuthState.js` we write our login methon, it's quite similar to the register method bu tit hits a different endpoint of our backend, "/api/auth"; We'll dispatch LOGIN_SUCCESS or LOGIN_FAIL to our reducer
+- in the authReducer we handle both cases
+- in our `Login.js` component, we do what we did for the Register component, bring in and init the contexts, add a useEffect to redirect if we're authenticated and check for invalid credentials error; and on onSubmit we check if the fields are filled in and call `login()` with the email and password if they are.
+- to test first get rid of the jwt in localstorage and then login with one of the registered user. We now will want to add log out functionality, and hide the register and login links in the navbar if the user is already logged in
