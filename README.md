@@ -220,3 +220,14 @@ autres outils: MongoDB Compass, Postman
 - in the Register component we add a useEffect hook to display the errors, we'll just check the actual error message here, if it was a larger app we'd send an error id from the back-end and use that instead. After it's sent, we want to clear the error from the state, so in `AuthState.js` we write the clearErrors method that'll dispatch to the reducer, where we write the case for CLEAR_ERRORS; then back in AuthState we call clearErrors in the useEffect hook
 - nb: right now we're not holding on our login even though we get a token back from registering. We want to hit the backend route for _Get logged in user_ to see if the user is logged in.
 
+#### Load User & Set Token
+
+- we want to load the user data from the backend and put it into our state to validate our authentification
+- We want to set the jwt into a global header within Axios so we don't have to put it in headers in every method when we fetch contacts etc; we do that in a new file `utils/setAuthToken.js` that'll set or remove a default header for _x-auth-token_
+- in `AuthState.js` we write the loadUser method, we make a get request to "/api/auth" to get the logged in user and dispatch to our dispatcher USER_LOADED if it works, or AUTH_ERROR if it doesn't. "/api/Auth" is a protected route so we'll need a jwt to access it so we import setAuthToken an call it before our try/catch block with the get request
+- in `authReducer.js` we write both switch cases.
+- we'll also run`setAuthToken()` in `App.js` so it runs every single time our main component loads
+- we add a call to `loadUser()` in the `register()` method in `AuthState.js` after the dispatch to REGISTER_SUCCESS, so now once we register a new user they get logged in
+- we want our Register component to redirect if we're authenticated, so we bring in `isAuthenticated` from our authContext and use it in the useEffect rigth before we check for errors where we redirect to homepage with react router if the user is authenticated
+- test in the browser tat it works, when we register a new user, the page redirects us to home and, the user data get put under `user` in the state, `isAuthenticated` is set to true, and the `token` get its value, (and the token get added to localstorage). If we reload the page though, `user` and `isAuthenticated` get set back to null and e don't want that, so we need to call load user when this home page loads
+- in `Home.js` we bring in and init our AuthContext and add a useEffect and call `loadUser()` within. If we reload the page in the navigator, we now see the `user` is there in the state; nb: the token was still in localstorage, loadUser was called with it, it hit the back-end at "/api/auth" and authenticated the user, so we didn't need to register a new user to test.
