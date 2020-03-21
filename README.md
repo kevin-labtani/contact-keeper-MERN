@@ -241,7 +241,12 @@ autres outils: MongoDB Compass, Postman
 
 #### User Logout & Navbar
 
-- in The Navbar component, bring in the authContext and initialize it, then we want to separate the links shown in the navbar based on wether user is logged in or not. We're actually going to get rid of the links to /About and /Home, there's nowhere else to go than the Home page if you're logged in, and you can't go (eventually, once implemented) to the Home page if you arent. You can now test in the browser and see different links in the Navbar based on `isAUthenticated` status. 
+- in The Navbar component, bring in the authContext and initialize it, then we want to separate the links shown in the navbar based on wether user is logged in or not. We're actually going to get rid of the links to /About and /Home, there's nowhere else to go than the Home page if you're logged in, and you can't go (eventually, once implemented) to the Home page if you arent. You can now test in the browser and see different links in the Navbar based on `isAUthenticated` status.
 - in `AuthState.js` we now write the logout method that dispatches LOGOUT to the reducer
 - in our reducer we implement the switch case for LOGOUT
 - back in our Navbar component, we call `logout()` in an onClick on the link, we don't call it inline because there's more stuff we'll want to do later when we logout so we create a separate method.
+
+#### Private Route component
+
+- we don't want the Home to show if we're not logged in, we'll create a new PrivateRoute component that basically add an extra layer to the actual Route component from react-router-dom. We need our authContext as we need to know if user is logged in and the app is done loading. We're returning a Route and pass in a component and the `...rest` that contains the React Router props. The PrivateRoute will redirect to the Login page if user isn't authenticated, or load the component we passed in if they are.
+- in `App.js`, bring in our private route and make the homepage private
