@@ -238,3 +238,10 @@ autres outils: MongoDB Compass, Postman
 - in the authReducer we handle both cases
 - in our `Login.js` component, we do what we did for the Register component, bring in and init the contexts, add a useEffect to redirect if we're authenticated and check for invalid credentials error; and on onSubmit we check if the fields are filled in and call `login()` with the email and password if they are.
 - to test first get rid of the jwt in localstorage and then login with one of the registered user. We now will want to add log out functionality, and hide the register and login links in the navbar if the user is already logged in
+
+#### User Logout & Navbar
+
+- in The Navbar component, bring in the authContext and initialize it, then we want to separate the links shown in the navbar based on wether user is logged in or not. We're actually going to get rid of the links to /About and /Home, there's nowhere else to go than the Home page if you're logged in, and you can't go (eventually, once implemented) to the Home page if you arent. You can now test in the browser and see different links in the Navbar based on `isAUthenticated` status. 
+- in `AuthState.js` we now write the logout method that dispatches LOGOUT to the reducer
+- in our reducer we implement the switch case for LOGOUT
+- back in our Navbar component, we call `logout()` in an onClick on the link, we don't call it inline because there's more stuff we'll want to do later when we logout so we create a separate method.
