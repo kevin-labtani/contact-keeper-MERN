@@ -250,3 +250,13 @@ autres outils: MongoDB Compass, Postman
 
 - we don't want the Home to show if we're not logged in, we'll create a new PrivateRoute component that basically add an extra layer to the actual Route component from react-router-dom. We need our authContext as we need to know if user is logged in and the app is done loading. We're returning a Route and pass in a component and the `...rest` that contains the React Router props. The PrivateRoute will redirect to the Login page if user isn't authenticated, or load the component we passed in if they are.
 - in `App.js`, bring in our private route and make the homepage private
+
+### Contact Integration
+
+#### Add Contact
+
+- drop the contacts collection in te db so we can start from fresh, than login with one of the users, all or backend is set so we can make a user with a specific logged in user, so now we want to make it so it's possible to add a contact for that user to the db.
+- in `ContactState.js` we want to make all of the methods already written actually interact with our backend. First get rid of the sample contacts in `initiaState`; init `contacts` to an empty array and also add `error` init to null + add it to the context provider. In the addContact method, we no longer need uuid, mongoDB will give us an id, then we add a post request to "/api/contacts" with axios (remember we don't add our token to the headers as it's set globally) and change the dispatch to send the response from the axios request to the reducer rather than the contact directly; in case we have an error with the post request, we dispatch a CONTACT_ERROR (add it to our types) to our reducer with the error message as payload.
+- add the CONTACT_ERROR case to `contactReducer.js`.
+- test adding a contact to the from in the browser, it should work
+- in the Contact component change the key from contact.id to contact._id to fix the key error.
