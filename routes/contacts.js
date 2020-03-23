@@ -35,7 +35,8 @@ router.post(
     [
       check("name", "Name is required")
         .not()
-        .isEmpty()
+        .isEmpty(),
+      check("email", "Please include a valid email").isEmail()
     ]
   ],
   async (req, res) => {
