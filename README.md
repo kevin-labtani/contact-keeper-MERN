@@ -259,4 +259,15 @@ autres outils: MongoDB Compass, Postman
 - in `ContactState.js` we want to make all of the methods already written actually interact with our backend. First get rid of the sample contacts in `initiaState`; init `contacts` to an empty array and also add `error` init to null + add it to the context provider. In the addContact method, we no longer need uuid, mongoDB will give us an id, then we add a post request to "/api/contacts" with axios (remember we don't add our token to the headers as it's set globally) and change the dispatch to send the response from the axios request to the reducer rather than the contact directly; in case we have an error with the post request, we dispatch a CONTACT_ERROR (add it to our types) to our reducer with the error message as payload.
 - add the CONTACT_ERROR case to `contactReducer.js`.
 - test adding a contact to the from in the browser, it should work
-- in the Contact component change the key from contact.id to contact._id to fix the key error.
+- in the Contact component change the key from contact.id to contact.\_id to fix the key error, also add alert messages in case name or email aren't provided
+
+#### Get Contacts
+
+- add missing types for getting and clearing contacts to `types.js`
+- in `ContactState.js` add a getContacts method (and add it to the contaxt provider too) that makes a get request to "/api/contacts" and dispatch GET_CONTACTS to our reducer with the response data as payload
+- add the GET_CONTACTS case in contactReducer
+- in Contacts components, add a useEffect hooks to load contacts with `getContacts()` when the component loads
+- in layouts, add a Spinner component we show while the contacts are loading
+- back in ContactState, we want to change the initialState for `contacts` from [] to `null`, and alter the code in Contacts from checking if contacts.length is 0 to also checking if it's null so we don't have the message _Please add a contact_ when we reload the page before our contacts load and it properly shows our spinner
+
+#### CLear Contacts

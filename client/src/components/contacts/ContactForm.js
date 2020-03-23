@@ -73,7 +73,7 @@ const ContactForm = () => {
         placeholder="Email"
         name="email"
         value={email}
-        // required
+        required
         onChange={onChange}
       />
       <input
