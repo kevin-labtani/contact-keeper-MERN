@@ -277,10 +277,16 @@ autres outils: MongoDB Compass, Postman
 - we also implement the CLEAR_CONTACTS switch case in the reducer, it'll jsut reste everythin in the state back to null
 - the method is called in the Navbar when we logout, we'll need to import and init our contactContext
 
-#### Delete contact
+#### Delete Contact
 
 - in the ContactItem component where we call onDelete, we need to change the `id` to `_id` as that's name of the mongodb field for id
 - in `ContactState.js`, we update the deleteContact method to make a delete request with axios to `/api/contacts/${id}`
 - in the reducer, change `contact.id` to `contact._id`
-- try if it works in the browser
+- test in the browser
 - in our backend, we order the contacts so that the mosr recent is first, in our reducer when we add a contzct to the ui it gets added to the end of the array, let's change this so we're consistent with our backend
+
+#### Update Contact
+
+- in `ContactState.js`, we update the updateContact method, it's basically similar to the addCOntact method but we make a put request instead to `/api/contacts/${contact._id}`
+- in the reducer, again, change the `id`'s with `_id`'s
+- test in the browser
