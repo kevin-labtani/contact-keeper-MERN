@@ -270,9 +270,17 @@ autres outils: MongoDB Compass, Postman
 - in layouts, add a Spinner component we show while the contacts are loading
 - back in ContactState, we want to change the initialState for `contacts` from [] to `null`, and alter the code in Contacts from checking if contacts.length is 0 to also checking if it's null so we don't have the message _Please add a contact_ when we reload the page before our contacts load and it properly shows our spinner
 
-#### CLear Contacts
+#### Clear Contacts
 
 - we need to implement a method to clear contact on logout so the contacts in the state a cleared the moment user logout instead on staying there until user or somebody else login
 - we write the method `clearContacts()` in ContactState and add it to our context provider
 - we also implement the CLEAR_CONTACTS switch case in the reducer, it'll jsut reste everythin in the state back to null
 - the method is called in the Navbar when we logout, we'll need to import and init our contactContext
+
+#### Delete contact
+
+- in the ContactItem component where we call onDelete, we need to change the `id` to `_id` as that's name of the mongodb field for id
+- in `ContactState.js`, we update the deleteContact method to make a delete request with axios to `/api/contacts/${id}`
+- in the reducer, change `contact.id` to `contact._id`
+- try if it works in the browser
+- in our backend, we order the contacts so that the mosr recent is first, in our reducer when we add a contzct to the ui it gets added to the end of the array, let's change this so we're consistent with our backend
