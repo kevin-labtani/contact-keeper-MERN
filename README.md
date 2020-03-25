@@ -293,3 +293,8 @@ autres outils: MongoDB Compass, Postman
 
 #### Deploy to Heroku
 
+- in `server.js`, check if the enviroment is production and if it is, set up a static folder "client/build" to serve the app, and a get route that'll load the index.html
+- create a `production.json` config file, usually you'de use a different db and a different secret
+- you can build the front-end with `npm run build` in the client folder, or you can build it on the server with a post build, that's what we'll do. In the root `package.json`, create a new script called "heroku-postbuild"
+- run `heroku login`
+- run `heroku create`

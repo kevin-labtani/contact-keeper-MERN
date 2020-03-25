@@ -115,6 +115,7 @@ mongodb-data
 
 # config and env variables
 config/default.json
+config/production.json
 
 #client app
 /client/build
