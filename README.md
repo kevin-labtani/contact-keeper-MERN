@@ -302,3 +302,7 @@ autres outils: MongoDB Compass, Postman
 - `git push heroku master` to deploy and run the post-build script
 - `heroku open` to open our app or go to https://still-ocean-64401.herokuapp.com/
 - nb: we will need to push config/production.json to heroku for this to work, pay attention to not reveal secrets when pushing to github!
+
+#### Refactor Secrets Handling
+
+- I decided to get rid of npm config package and use environment variables in a `dev.env` file in "./config" instead, and env-cmd in dev to load them as it's easier to deal with protecting secrets when pushing to github; don't forget add the env variables to heroku.

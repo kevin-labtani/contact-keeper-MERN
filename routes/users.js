@@ -1,6 +1,5 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const config = require("config");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 
@@ -55,7 +54,7 @@ router.post(
       // generate jwt with payload and secret, send back token as json if succeeds
       jwt.sign(
         payload,
-        config.get("jwtSecret"),
+        process.env.jwtSecret,
         {
           // 3600 is an hour, put 100h in dev so it doesn't expire while we test
           expiresIn: 360000

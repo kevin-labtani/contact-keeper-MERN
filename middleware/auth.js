@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const config = require("config");
 
 module.exports = function(req, res, next) {
   // get the token from headers
@@ -12,7 +11,7 @@ module.exports = function(req, res, next) {
 
   try {
     // verify the token in the header with the secret in our default.json
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const decoded = jwt.verify(token, process.env.jwtSecret);
     // the payload is now in decoded, we get the user from the payload and assign him to the request object
     req.user = decoded.user;
     // we move on by calling next()
