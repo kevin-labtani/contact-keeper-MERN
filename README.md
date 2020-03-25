@@ -294,10 +294,11 @@ autres outils: MongoDB Compass, Postman
 #### Deploy to Heroku
 
 - in `server.js`, check if the enviroment is production and if it is, set up a static folder "client/build" to serve the app, and a get route that'll load the index.html
-- create a `production.json` config file, usually you'de use a different db and a different secret
+- create a `production.json` config file, usually you'd use a different db and a different secret
 - you can build the front-end with `npm run build` in the client folder, or you can build it on the server with a post build, that's what we'll do. In the root `package.json`, create a new script called "heroku-postbuild"
 - run `heroku login`
 - run `heroku create`
 - add heroku as a remote `heroku git:remote -a still-ocean-64401`
 - `git push heroku master` to deploy and run the post-build script
 - `heroku open` to open our app or go to https://still-ocean-64401.herokuapp.com/
+- nb: we will need to push config/production.json to heroku for this to work, pay attention to not reveal secrets when pushing to github!
