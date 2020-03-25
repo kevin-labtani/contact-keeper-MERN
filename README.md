@@ -298,3 +298,6 @@ autres outils: MongoDB Compass, Postman
 - you can build the front-end with `npm run build` in the client folder, or you can build it on the server with a post build, that's what we'll do. In the root `package.json`, create a new script called "heroku-postbuild"
 - run `heroku login`
 - run `heroku create`
+- add heroku as a remote `heroku git:remote -a still-ocean-64401`
+- `git push heroku master` to deploy and run the post-build script
+- `heroku open` to open our app or go to https://still-ocean-64401.herokuapp.com/
