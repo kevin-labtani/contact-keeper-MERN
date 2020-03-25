@@ -10,10 +10,6 @@ connectDB();
 // parse incoming json to an object
 app.use(express.json());
 
-app.get("/", (req, res) =>
-  res.json({ msg: "Welcome to the Contact Keeper API" })
-);
-
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/contacts", require("./routes/contacts"));

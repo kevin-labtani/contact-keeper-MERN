@@ -290,3 +290,6 @@ autres outils: MongoDB Compass, Postman
 - in `ContactState.js`, we update the updateContact method, it's basically similar to the addCOntact method but we make a put request instead to `/api/contacts/${contact._id}`
 - in the reducer, again, change the `id`'s with `_id`'s
 - test in the browser
+
+#### Deploy to Heroku
+
