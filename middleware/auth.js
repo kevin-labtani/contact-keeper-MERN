@@ -10,7 +10,7 @@ module.exports = function(req, res, next) {
   }
 
   try {
-    // verify the token in the header with the secret in our default.json
+    // verify the token in the header with the secret in our env
     const decoded = jwt.verify(token, process.env.jwtSecret);
     // the payload is now in decoded, we get the user from the payload and assign him to the request object
     req.user = decoded.user;

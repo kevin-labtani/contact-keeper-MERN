@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 
-// grab uri with username and password from default.json with config
+// grab uri with username and password from our env
 const db = process.env.mongoURI;
 // connect to mongodb atlas database
 const connectDB = async () => {
